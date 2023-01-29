@@ -6,7 +6,7 @@ from .models import *
 
 @admin.register(Profile)
 class GameAdmin(admin.ModelAdmin):
-    filter_horizontal = ['steam_games']
+    filter_horizontal = ['games']
     search_fields = ['steam_games']
     show_full_result_count = 50
 
