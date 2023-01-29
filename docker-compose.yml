@@ -24,3 +24,14 @@ services:
       - POSTGRES_DB=db
       - POSTGRES_USER=db_admin
       - POSTGRES_PASSWORD=admin
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: stilix09@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"

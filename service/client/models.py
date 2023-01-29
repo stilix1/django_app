@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from games.models import Game
+
+from games.models import Game, SteamGames
 
 
 class Profile(models.Model):
@@ -14,6 +15,7 @@ class Profile(models.Model):
     total_h = models.CharField(max_length=30, blank=True, default=0)
     birth_date = models.DateField(null=True, blank=True)
     games = models.ManyToManyField(Game)
+    steamgames = models.ManyToManyField(SteamGames)
 
     def __str__(self):
         return f'{self.user} - {self.nickname}'
@@ -31,7 +33,8 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 class UserGameM(models.Model):
-    games = models.ForeignKey(Game, on_delete=models.PROTECT, verbose_name='Игра')
+    games = models.ForeignKey(Game, on_delete=models.PROTECT, verbose_name='Игры', null=True)
+    steam_games = models.ForeignKey(SteamGames, on_delete=models.PROTECT, verbose_name='Steam', null=True)
     client = models.ForeignKey(Profile, on_delete=models.PROTECT, verbose_name='Пользователь')
     user_rate = models.IntegerField(validators=[
         MinValueValidator(1),
