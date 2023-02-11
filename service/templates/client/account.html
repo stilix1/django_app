@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Профиль
+{% endblock %}
+
+{% block css %}
+{% endblock %}
+
+{% block content %}
+    <div class="user-info">
+        <div class="card">
+            <div class="card-body">
+                <ul class="card-text">
+                    <h1 class="card-title"> Информация о пользователе </h1>
+                    <li> <p class="info"> Имя пользователя: </p> <p class="value"> {{ user.username }} </p> </li>
+                    <li> <p class="info">Последняя авторизация:</p> <p class="value">{{ user.last_login }} </p> </li>
+                    <li> <p class="info">Игры:</p> <p class="value">{{ profile }} </p> </li>
+                    <li> <p class="info"> Права администратора: </p> {% if user.is_superuser %}
+                        <p class="value"> Является Администратором </p>
+                        {% else %}
+                        <p class="value"> Является пользователем </p>
+                        {% endif %}
+                    </li>
+                    <li> <p class="info"> Данные Пользователя:</p>
+                        {% if user.firstname %}
+                        <p class="value"> {{ user.firstname }} {{ user.lastname }} </p></li>
+                        {% else %}
+                        <p class="value"> Не указанны </p>
+                        {% endif %}
+                    <li> <p class="info"> Email: </p> <p class="value"> {{ user.email }} </p> </li>
+                    <li> <p class="info"> Дата регистрации: <p class="value"> {{ user.date_joined }} </p> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -5,7 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-from games.models import Game, SteamGames
+from games.models import SteamGames
 
 
 class Profile(models.Model):
@@ -14,7 +14,6 @@ class Profile(models.Model):
     total_games = models.CharField(max_length=30, blank=True, default=0)
     total_h = models.CharField(max_length=30, blank=True, default=0)
     birth_date = models.DateField(null=True, blank=True)
-    games = models.ManyToManyField(Game)
     steamgames = models.ManyToManyField(SteamGames)
 
     def __str__(self):
@@ -33,7 +32,6 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 class UserGameM(models.Model):
-    games = models.ForeignKey(Game, on_delete=models.PROTECT, verbose_name='Игры', null=True)
     steam_games = models.ForeignKey(SteamGames, on_delete=models.PROTECT, verbose_name='Steam', null=True)
     client = models.ForeignKey(Profile, on_delete=models.PROTECT, verbose_name='Пользователь')
     user_rate = models.IntegerField(validators=[
@@ -45,4 +43,4 @@ class UserGameM(models.Model):
     user_review = models.TextField(blank=True, verbose_name='Отзыв')
 
     def __str__(self):
-        return f'User: {self.client} || Game: {self.games}'
+        return f'User: {self.client} || Game: {self.steam_games.name}'
